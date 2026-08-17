@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37111.16 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TvcK65NetCoreMVC", "TvcK65NetCoreMVC.csproj", "{F03B5B96-F691-4825-8BFE-16C636F79C40}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F03B5B96-F691-4825-8BFE-16C636F79C40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F03B5B96-F691-4825-8BFE-16C636F79C40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F03B5B96-F691-4825-8BFE-16C636F79C40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F03B5B96-F691-4825-8BFE-16C636F79C40}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9F6BB89-0B87-45E3-A180-FE35F4B3F76A}
+	EndGlobalSection
+EndGlobal
