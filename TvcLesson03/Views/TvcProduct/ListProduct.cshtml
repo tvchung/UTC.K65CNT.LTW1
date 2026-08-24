@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "ListProduct";
+
+    var product = ViewData["tvcProduct"] as TvcLesson03.Models.TvcProduct;
+
+    var products = ViewData["list-product"] as List<TvcLesson03.Models.TvcProduct>;
+}
+
+<h1>@ViewBag.hello</h1>
+<hr/>
+<h2>Sản phẩm:</h2>
+<p>Mã: @product.productId </p>
+<p>Tên: @product.productName</p>
+<hr/>
+@foreach (var item in products)
+{
+    <p>@item.productId  -  @item.productName</p>
+}
