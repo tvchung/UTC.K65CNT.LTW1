@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "Thông tin sinh viên";
+}
+
+<div class="alert alert-info">
+    <h1>@ViewData["Title"]</h1>
+    <hr/>
+    <p>Họ và tên: @ViewBag.name</p>
+    <p>Tuổi: @ViewData["age"]</p>
+    <p>Địa chỉ: @TempData["address"]</p>
+</div>
+
+
