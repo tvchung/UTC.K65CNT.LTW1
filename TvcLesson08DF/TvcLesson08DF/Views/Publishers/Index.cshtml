@@ -1,17 +1,17 @@
-@model IEnumerable<TvcLesson08DF.Models.Category>
+@model IEnumerable<TvcLesson08DF.Models.Publisher>
 
 @{
-    ViewData["Title"] = "Danh sách Loại sách";
+    ViewData["Title"] = "Danh sách Nhà xuất bản";
 }
 
 <div class="container-fluid py-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
-            <h2 class="text-primary mb-1">Quản lý Loại Sách</h2>
-            <p class="text-muted mb-0">Danh sách các danh mục / thể loại sách</p>
+            <h2 class="text-primary mb-1">Quản lý Nhà Xuất Bản</h2>
+            <p class="text-muted mb-0">Danh sách các nhà xuất bản trong hệ thống</p>
         </div>
         <a asp-action="Create" class="btn btn-primary shadow-sm">
-            <i class="bi bi-plus-circle"></i> + Thêm mới Loại sách
+            <i class="bi bi-plus-circle"></i> + Thêm mới Nhà xuất bản
         </a>
     </div>
 
@@ -35,7 +35,7 @@
         <div class="card-body">
             <form method="get" asp-action="Index" class="row g-2 mb-3">
                 <div class="col-md-5">
-                    <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control" placeholder="Tìm kiếm theo tên loại sách..." />
+                    <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control" placeholder="Tìm kiếm theo tên, SĐT, địa chỉ..." />
                 </div>
                 <div class="col-md-auto">
                     <button type="submit" class="btn btn-secondary">Tìm kiếm</button>
@@ -50,17 +50,19 @@
                 <table class="table table-hover table-bordered align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th style="width: 100px;" class="text-center">@Html.DisplayNameFor(model => model.CategoryId)</th>
-                            <th>@Html.DisplayNameFor(model => model.CategoryName)</th>
-                            <th class="text-center" style="width: 160px;">Số lượng sách</th>
-                            <th class="text-center" style="width: 220px;">Thao tác</th>
+                            <th style="width: 80px;" class="text-center">@Html.DisplayNameFor(model => model.PublisherId)</th>
+                            <th>@Html.DisplayNameFor(model => model.PublisherName)</th>
+                            <th>@Html.DisplayNameFor(model => model.Phone)</th>
+                            <th>@Html.DisplayNameFor(model => model.Address)</th>
+                            <th class="text-center" style="width: 130px;">Số lượng sách</th>
+                            <th class="text-center" style="width: 210px;">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if (!Model.Any())
                         {
                             <tr>
-                                <td colspan="4" class="text-center text-muted py-4">Không tìm thấy loại sách nào.</td>
+                                <td colspan="6" class="text-center text-muted py-4">Không tìm thấy dữ liệu nhà xuất bản nào.</td>
                             </tr>
                         }
                         else
@@ -68,8 +70,10 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td class="text-center fw-bold">@item.CategoryId</td>
-                                    <td class="fw-semibold text-primary">@item.CategoryName</td>
+                                    <td class="text-center fw-bold">@item.PublisherId</td>
+                                    <td class="fw-semibold text-primary">@item.PublisherName</td>
+                                    <td>@(string.IsNullOrEmpty(item.Phone) ? "-" : item.Phone)</td>
+                                    <td>@(string.IsNullOrEmpty(item.Address) ? "-" : item.Address)</td>
                                     <td class="text-center">
                                         <span class="badge bg-info text-dark rounded-pill">
                                             @item.Books.Count quyển
@@ -77,13 +81,13 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group btn-group-sm" role="group">
-                                            <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn btn-outline-warning" title="Chỉnh sửa">
+                                            <a asp-action="Edit" asp-route-id="@item.PublisherId" class="btn btn-outline-warning" title="Chỉnh sửa">
                                                 Sửa
                                             </a>
-                                            <a asp-action="Details" asp-route-id="@item.CategoryId" class="btn btn-outline-info" title="Chi tiết">
+                                            <a asp-action="Details" asp-route-id="@item.PublisherId" class="btn btn-outline-info" title="Chi tiết">
                                                 Xem
                                             </a>
-                                            <a asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-outline-danger" title="Xóa">
+                                            <a asp-action="Delete" asp-route-id="@item.PublisherId" class="btn btn-outline-danger" title="Xóa">
                                                 Xóa
                                             </a>
                                         </div>

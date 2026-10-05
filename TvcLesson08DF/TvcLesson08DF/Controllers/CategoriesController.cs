@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,9 +19,17 @@ namespace TvcLesson08DF.Controllers
         }
 
         // GET: Categories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchString)
         {
-            return View(await _context.Categories.ToListAsync());
+            var query = _context.Categories.Include(c => c.Books).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(c => c.CategoryName != null && c.CategoryName.Contains(searchString));
+                ViewBag.SearchString = searchString;
+            }
+
+            return View(await query.ToListAsync());
         }
 
         // GET: Categories/Details/5
@@ -33,7 +41,9 @@ namespace TvcLesson08DF.Controllers
             }
 
             var category = await _context.Categories
+                .Include(c => c.Books)
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
+
             if (category == null)
             {
                 return NotFound();
@@ -49,8 +59,6 @@ namespace TvcLesson08DF.Controllers
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
@@ -59,6 +67,7 @@ namespace TvcLesson08DF.Controllers
             {
                 _context.Add(category);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Thêm mới loại sách thành công!";
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
@@ -81,8 +90,6 @@ namespace TvcLesson08DF.Controllers
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName")] Category category)
@@ -98,6 +105,7 @@ namespace TvcLesson08DF.Controllers
                 {
                     _context.Update(category);
                     await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Cập nhật loại sách thành công!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,7 +132,9 @@ namespace TvcLesson08DF.Controllers
             }
 
             var category = await _context.Categories
+                .Include(c => c.Books)
                 .FirstOrDefaultAsync(m => m.CategoryId == id);
+
             if (category == null)
             {
                 return NotFound();
@@ -138,13 +148,23 @@ namespace TvcLesson08DF.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.Categories
+                .Include(c => c.Books)
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+
             if (category != null)
             {
+                if (category.Books.Any())
+                {
+                    TempData["ErrorMessage"] = $"Không thể xóa loại sách '{category.CategoryName}' vì đang có {category.Books.Count} cuốn sách thuộc loại sách này!";
+                    return RedirectToAction(nameof(Index));
+                }
+
                 _context.Categories.Remove(category);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Xóa loại sách thành công!";
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

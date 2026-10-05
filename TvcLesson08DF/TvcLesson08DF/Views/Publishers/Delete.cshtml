@@ -1,7 +1,7 @@
-@model TvcLesson08DF.Models.Category
+@model TvcLesson08DF.Models.Publisher
 
 @{
-    ViewData["Title"] = "Xác nhận xóa Loại sách";
+    ViewData["Title"] = "Xác nhận xóa Nhà xuất bản";
 }
 
 <div class="container py-3">
@@ -9,19 +9,25 @@
         <div class="col-md-8">
             <div class="card shadow-sm border-danger">
                 <div class="card-header bg-danger text-white">
-                    <h5 class="card-title mb-0">Xác nhận xóa Loại sách</h5>
+                    <h5 class="card-title mb-0">Xác nhận xóa Nhà xuất bản</h5>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-warning">
-                        <strong>Cảnh báo:</strong> Bạn có chắc chắn muốn xóa loại sách này không? Thao tác này không thể hoàn tác!
+                        <strong>Cảnh báo:</strong> Bạn có chắc chắn muốn xóa nhà xuất bản này không? Thao tác này không thể hoàn tác!
                     </div>
 
                     <dl class="row">
-                        <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.CategoryId)</dt>
-                        <dd class="col-sm-8 fw-bold">@Model.CategoryId</dd>
+                        <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.PublisherId)</dt>
+                        <dd class="col-sm-8 fw-bold">@Model.PublisherId</dd>
 
-                        <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.CategoryName)</dt>
-                        <dd class="col-sm-8 text-primary fw-semibold">@Html.DisplayFor(model => model.CategoryName)</dd>
+                        <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.PublisherName)</dt>
+                        <dd class="col-sm-8 text-primary fw-semibold">@Html.DisplayFor(model => model.PublisherName)</dd>
+
+                        <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.Phone)</dt>
+                        <dd class="col-sm-8">@(string.IsNullOrEmpty(Model.Phone) ? "-" : Model.Phone)</dd>
+
+                        <dt class="col-sm-4 text-muted">@Html.DisplayNameFor(model => model.Address)</dt>
+                        <dd class="col-sm-8">@(string.IsNullOrEmpty(Model.Address) ? "-" : Model.Address)</dd>
 
                         <dt class="col-sm-4 text-muted">Số lượng sách liên kết</dt>
                         <dd class="col-sm-8">
@@ -34,12 +40,12 @@
                     @if (Model.Books.Any())
                     {
                         <div class="alert alert-danger mt-2">
-                            <strong>Lưu ý:</strong> Thể loại này hiện đang có dữ liệu sách liên kết. Hệ thống sẽ chặn thao tác xóa để đảm bảo toàn vẹn dữ liệu.
+                            <strong>Lưu ý:</strong> Nhà xuất bản này hiện đang có dữ liệu sách liên kết. Việc xóa có thể bị từ chối bởi hệ thống để đảm bảo toàn vẹn dữ liệu.
                         </div>
                     }
 
                     <form asp-action="Delete" class="mt-4">
-                        <input type="hidden" asp-for="CategoryId" />
+                        <input type="hidden" asp-for="PublisherId" />
                         <div class="d-flex justify-content-between">
                             <a asp-action="Index" class="btn btn-secondary">&larr; Quay lại danh sách</a>
                             <button type="submit" class="btn btn-danger">
